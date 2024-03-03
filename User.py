@@ -22,7 +22,7 @@ class User(Notification):
         self.notifications = []
 
     def __str__(self):
-        return f"User name: {self.username}, Number of posts: {len(self.posts)}, Number of followers: {len(self.followers)}\n"
+        return f"User name: {self.username}, Number of posts: {len(self.posts)}, Number of followers: {len(self.followers)}"
         
     def follow(self, other_user):
         if other_user != self and self.connected:
@@ -43,7 +43,7 @@ class User(Notification):
         else:
             print(f"Cannot unfollow")
     
-    def publish_post(self, style, content, location = None, price = 0):
+    def publish_post(self, style, content, price = 0, location = None):
         if self.connected:
             if style == "Text":
                 post = TextPost(self, content)
@@ -62,7 +62,7 @@ class User(Notification):
                 return post
             
             if style == "Sale":
-                post = SalePost(self, content, location, price)
+                post = SalePost(self, content, price, location)
                 self.posts.append(post)
                 print(f"{self.username} posted a product for sale:\nFor sale! {content}, price: {price}, pickup from: {location}\n")
                 for user in self.followers:

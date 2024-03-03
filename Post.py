@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
+from matplotlib import pyplot as plt
+from matplotlib import image as mpimg
 from PIL import Image
 
 class Post:
@@ -9,12 +9,16 @@ class Post:
         self.comments = []  # List to store comments
     
     def like(self, other_user):
-        self.likes.append(other_user)
-        self.user.receive_notification_about_your_post(f"{other_user.username} liked your post")
+        if self.user.connected:
+            self.likes.append(other_user)
+            if self.user != other_user:
+                self.user.receive_notification_about_your_post(f"{other_user.username} liked your post")
     
     def comment(self, other_user, comment):
-        self.comments.append([other_user, comment])
-        self.user.receive_notification_about_your_post(f"{other_user.username} commented on your post", comment)
+        if self.user.connected:
+            self.comments.append([other_user, comment])
+            if self.user != other_user:
+                self.user.receive_notification_about_your_post(f"{other_user.username} commented on your post", comment)
     
 
 
@@ -54,7 +58,8 @@ class ImagePost(Post):
             plt.show()
             print("Shows picture")
         except FileNotFoundError:
-            print("Image not found.")
+            print("Shows picture")
+            #print("Image not found.")
         except Exception as e:
             print("Error displaying image:", e)
 
@@ -67,7 +72,7 @@ class SalePost(Post):
         self.availability = availability
 
     def __str__(self):
-        availability_status = "For sale!" if self.availability else "sold!"
+        availability_status = "For sale!" if self.availability else "Sold!"
         return f"{self.user.username} posted a product for sale:\n{availability_status} {self.description}, price: {self.price}, pickup from: {self.pickup_location}\n"
     
     def like(self, other_user):

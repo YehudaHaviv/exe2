@@ -36,7 +36,7 @@ class SocialNetwork:
         user = self.find_user(username)
         if user and password == user.password:
             user.connected = True
-            print(f"User {username} connected")
+            print(f"{username} connected")
         else:
             print(f"User {username} not found")
     
@@ -44,7 +44,7 @@ class SocialNetwork:
         user = self.find_user(username)
         if user and user.connected:
             user.connected = False
-            print(f"User {username} disconnected")
+            print(f"{username} disconnected")
         else:
             print(f"User {username} not found")
     
