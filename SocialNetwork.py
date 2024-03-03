@@ -3,9 +3,9 @@ from User import User
 class SocialNetwork:
     _instance = None  # Singleton instance
     
-    def __new__(cls, name, *args, **kwargs):
+    def __new__(cls, name): #*args, **kwargs):
         if cls._instance is None:
-            cls._instance = super().__new__(cls, *args, **kwargs)
+            cls._instance = super().__new__(cls) #*args, **kwargs)
             cls._instance.users = []  # List to store user instances
             cls._instance.name = name  # Network name
             print(f"The social network {name} was created!")
